@@ -1,0 +1,33 @@
+#.github/workflows/build-deploy.yml
+name: deploy-pipeline
+on:
+  workflow_dispatch:
+
+jobs:
+  build-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: echo starting build
+
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: DEV
+      url: "https://dev.atlassian.com"
+    needs: build-environment
+    steps:
+      - name: Run a one-line script
+        run: echo deploy dev
+
+
+  deploy-prd:
+    runs-on: ubuntu-latest
+    environment:
+      name: PRD
+      url: "https://atlassian.com"
+    needs: deploy-dev
+    steps:
+      - name: Run a one-line script
+        run: echo deploy prd
